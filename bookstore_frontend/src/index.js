@@ -1,11 +1,5 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import './index.css';
-import App from './App';
-
-const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>
-);
+/**
+ * This project now uses TypeScript entry at src/index.tsx.
+ * Keeping this file to satisfy CRA default structure; it is not used.
+ */
+export {};
