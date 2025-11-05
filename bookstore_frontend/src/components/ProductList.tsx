@@ -16,6 +16,7 @@ export default function ProductList({ items }: { items: Book[] }): JSX.Element {
   /**
    * Renders a grid of book cards with cover images.
    * Uses a local placeholder if imageUrl is missing or fails to load.
+   * Tests stub: ensure "View details" button routes correctly to /book/:id.
    */
   if (!items.length) {
     return <p className="text-muted">No books match your criteria.</p>;
@@ -27,13 +28,13 @@ export default function ProductList({ items }: { items: Book[] }): JSX.Element {
     <div className="row g-3">
       {items.map((book) => (
         <div key={book.id} className="col-12 col-sm-6 col-lg-4">
-          <div className="card h-100 shadow-sm product-card">
-            {/** Image header */}
+          <div className="card h-100 shadow-sm product-card border-0">
+            {/* Image header - consistent aspect */}
             <div className="ratio ratio-3x4">
               <img
                 src={book.imageUrl || fallback}
                 alt={`Cover of ${book.title} by ${book.author}`}
-                className="card-img-top object-fit-cover rounded-top"
+                className="card-img-top object-fit-cover"
                 onError={(e) => {
                   const target = e.currentTarget as HTMLImageElement;
                   if (target.src !== window.location.origin + fallback) {
@@ -51,13 +52,13 @@ export default function ProductList({ items }: { items: Book[] }): JSX.Element {
               <p className="card-text text-truncate" title={book.description}>
                 {book.description}
               </p>
-              <div className="mt-auto d-flex justify-content-between align-items-center">
-                <strong>${book.price.toFixed(2)}</strong>
+              <div className="mt-auto d-flex justify-content-between align-items-center pt-2">
+                <strong className="fs-5">${book.price.toFixed(2)}</strong>
                 <div className="d-flex gap-2">
-                  <Link to={`/book/${book.id}`} className="btn btn-sm btn-outline-primary">
-                    Details
+                  <Link to={`/book/${book.id}`} className="btn btn-sm btn-gradient-primary">
+                    View details
                   </Link>
-                  <button className="btn btn-sm btn-primary" disabled>
+                  <button className="btn btn-sm btn-outline-secondary" disabled>
                     Add
                   </button>
                 </div>

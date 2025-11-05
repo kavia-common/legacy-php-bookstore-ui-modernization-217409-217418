@@ -32,6 +32,20 @@ body {
   filter: brightness(0.95);
 }
 
+/* Gradient accent primary button */
+.btn-gradient-primary {
+  color: #fff !important;
+  background: linear-gradient(135deg, var(--color-primary), #2563eb);
+  border: none;
+  transition: transform .15s ease, box-shadow .15s ease, filter .15s ease;
+}
+.btn-gradient-primary:hover,
+.btn-gradient-primary:focus {
+  filter: brightness(1.02);
+  transform: translateY(-1px);
+  box-shadow: 0 0.25rem 0.75rem rgba(59, 130, 246, 0.25);
+}
+
 /* Outline info uses success accent (#06b6d4) per style guide */
 .btn-outline-info {
   color: var(--color-success);
@@ -86,3 +100,29 @@ a.link-primary:hover {
 .object-fit-cover {
   object-fit: cover !important;
 }
+
+/* Product card hover polish */
+.product-card {
+  transition: transform .2s ease, box-shadow .2s ease;
+  border-radius: .5rem;
+  overflow: hidden;
+}
+.product-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 .5rem 1rem rgba(0,0,0,.08), 0 .125rem .25rem rgba(0,0,0,.06);
+}
+
+/* Search dropdown look */
+.search-dropdown {
+  border: 1px solid rgba(0,0,0,0.08);
+  border-radius: .5rem;
+  overflow: hidden;
+}
+.search-dropdown .dropdown-item.active,
+.search-dropdown .dropdown-item:active {
+  background-color: var(--primary-15);
+  color: inherit;
+}
+
+/* Ensure ratio helper is supported consistently if used elsewhere */
+.ratio-3x4 { aspect-ratio: 3 / 4; }
