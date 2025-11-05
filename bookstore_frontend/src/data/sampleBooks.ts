@@ -1,5 +1,9 @@
 import type { Book } from '../components/ProductList';
 
+/**
+ * Image assets are served from the public folder:
+ * public/assets/books/* -> available at /assets/books/*
+ */
 const base = '/assets/books/';
 
 export const sampleBooks: Book[] = [

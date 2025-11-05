@@ -24,6 +24,16 @@ export default function ProductList({ items }: { items: Book[] }): JSX.Element {
 
   const fallback = '/assets/books/placeholder-book.png';
 
+  const handleImgError = (e: React.SyntheticEvent<HTMLImageElement>, originalSrc?: string) => {
+    const t = e.currentTarget;
+    // Prevent infinite loop if fallback also fails
+    if (!t.getAttribute('data-fallback-applied')) {
+      console.warn('Image failed to load, applying fallback:', originalSrc || t.src);
+      t.src = fallback;
+      t.setAttribute('data-fallback-applied', 'true');
+    }
+  };
+
   return (
     <div className="row g-3">
       {items.map((book) => (
@@ -34,13 +44,8 @@ export default function ProductList({ items }: { items: Book[] }): JSX.Element {
               <img
                 src={book.imageUrl || fallback}
                 alt={`Cover of ${book.title} by ${book.author}`}
-                className="card-img-top object-fit-cover"
-                onError={(e) => {
-                  const target = e.currentTarget as HTMLImageElement;
-                  if (target.src !== window.location.origin + fallback) {
-                    target.src = fallback;
-                  }
-                }}
+                className="card-img-top book-cover"
+                onError={(e) => handleImgError(e, book.imageUrl)}
               />
             </div>
             <div className="card-body d-flex flex-column">

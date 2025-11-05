@@ -1,0 +1,9 @@
+# This file ensures the directory exists in version control.
+# Actual image assets are expected to be placed here:
+# - pragmatic-programmer.jpg
+# - clean-code.jpg
+# - atomic-habits.jpg
+# - educated.jpg
+# - project-hail-mary.jpg
+# - where-the-crawdads-sing.jpg
+# - placeholder-book.png

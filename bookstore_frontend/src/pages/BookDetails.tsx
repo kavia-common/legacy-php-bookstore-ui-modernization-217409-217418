@@ -27,6 +27,15 @@ export default function BookDetails(): JSX.Element {
 
   const fallback = '/assets/books/placeholder-book.png';
 
+  const handleImgError = (e: React.SyntheticEvent<HTMLImageElement>, originalSrc?: string) => {
+    const t = e.currentTarget;
+    if (!t.getAttribute('data-fallback-applied')) {
+      console.warn('Image failed to load, applying fallback:', originalSrc || t.src);
+      t.src = fallback;
+      t.setAttribute('data-fallback-applied', 'true');
+    }
+  };
+
   return (
     <div className="card shadow-sm">
       <div className="card-body">
@@ -36,13 +45,8 @@ export default function BookDetails(): JSX.Element {
               <img
                 src={book.imageUrl || fallback}
                 alt={`Cover of ${book.title} by ${book.author}`}
-                className="img-fluid rounded object-fit-cover"
-                onError={(e) => {
-                  const target = e.currentTarget as HTMLImageElement;
-                  if (target.src !== window.location.origin + fallback) {
-                    target.src = fallback;
-                  }
-                }}
+                className="img-fluid rounded book-cover"
+                onError={(e) => handleImgError(e, book.imageUrl)}
               />
             </div>
           </div>

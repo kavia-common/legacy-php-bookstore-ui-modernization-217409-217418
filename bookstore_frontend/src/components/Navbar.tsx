@@ -232,7 +232,11 @@ export default function AppNavbar(): JSX.Element {
                           className="w-100 h-100 object-fit-cover"
                           onError={(e) => {
                             const t = e.currentTarget as HTMLImageElement;
-                            if (t.src !== window.location.origin + fallback) t.src = fallback;
+                            if (!t.getAttribute('data-fallback-applied')) {
+                              console.warn('Navbar thumbnail failed to load, applying fallback:', book.imageUrl || t.src);
+                              t.src = fallback;
+                              t.setAttribute('data-fallback-applied', 'true');
+                            }
                           }}
                         />
                       </div>

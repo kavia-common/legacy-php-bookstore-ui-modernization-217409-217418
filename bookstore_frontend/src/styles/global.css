@@ -96,6 +96,14 @@ a.link-primary:hover {
   object-fit: cover;
 }
 
+/* Explicit book cover utility used by ProductList and BookDetails */
+.book-cover {
+  width: 100%;
+  aspect-ratio: 3 / 4;
+  object-fit: cover;
+  display: block;
+}
+
 /* Utility in case object-fit class missing */
 .object-fit-cover {
   object-fit: cover !important;
