@@ -1,16 +1,16 @@
 # Migration Guide: Legacy PHP UI to React (Vite)
 
-This document maps legacy PHP pages to their new React routes and components and summarizes structural changes to run under Vite on port 3001.
+This document maps legacy PHP pages to their new React routes and components and summarizes structural changes to run under Vite on port 3000.
 
 ## Build/Runtime Changes
 - Standardized on Vite + React + TypeScript
 - No service worker is used
 - No references to /static/js/bundle.js anywhere
-- Dev server: http://localhost:3001 (npm run dev)
-- Preview server: http://localhost:3001 (npm run preview)
+- Dev server: http://localhost:3000 (npm run dev)
+- Preview server: http://localhost:3000 (npm run preview)
 - Entry HTML: index.html (Vite template)
 - Entrypoint: src/main.tsx (React 18 createRoot)
-- HMR is configured with clientPort 3001 to work behind the preview proxy
+- HMR clientPort aligned to 3000 to work behind the platform proxy
 
 ## Routes Mapping (PHP → React)
 - index.php → / → src/pages/Home.tsx
