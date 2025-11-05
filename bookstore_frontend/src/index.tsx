@@ -5,6 +5,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './theme.css';
 import './main.css';
 import App from './App';
+import { unregisterServiceWorker } from './serviceWorker';
 
 /**
  * React 18 bootstrap:
@@ -38,11 +39,7 @@ const root = createRoot(container);
 
 // Ensure any previously registered service workers are unregistered to avoid
 // no-op fetch handlers and caching issues serving stale assets.
-import('./serviceWorker')
-  .then(m => {
-    try { m.unregisterServiceWorker?.(); } catch { /* ignore */ }
-  })
-  .catch(() => { /* ignore */ });
+try { unregisterServiceWorker(); } catch { /* ignore */ }
 
 root.render(
   <React.StrictMode>
