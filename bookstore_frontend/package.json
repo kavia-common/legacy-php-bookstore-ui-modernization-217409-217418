@@ -19,9 +19,10 @@
     "vite": "^5.4.8"
   },
   "scripts": {
-    "dev": "PORT=3000 vite --port 3000",
+    "start": "vite --port 3000",
+    "dev": "vite --port 3000",
     "build": "tsc -b && vite build",
-    "preview": "PORT=3000 vite preview --port 3000",
+    "preview": "vite preview --port 3000",
     "typecheck": "tsc --noEmit"
   },
   "browserslist": {
