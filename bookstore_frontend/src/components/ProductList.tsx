@@ -1,6 +1,8 @@
 import React, { useMemo, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { attachFallback, getImageSrc, useImageDiagnostics } from '../utils/imageUtils';
+import { useAuth } from '../context/AuthContext';
+import { useCart } from '../context/CartContext';
 
 export type Book = {
   id: number;
@@ -27,18 +29,29 @@ export default function ProductList({ items }: { items: Book[] }): JSX.Element {
 
   const diagnostics = useImageDiagnostics();
   const [failedIds, setFailedIds] = useState<Record<number, boolean>>({});
+  const { user } = useAuth();
+  const { addToCart } = useCart();
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  function showBadge(badgeId: string) {
+    const badge = document.getElementById(badgeId);
+    if (!badge) return;
+    badge.classList.add('show');
+    window.setTimeout(() => {
+      badge.classList.remove('show');
+    }, 1200);
+  }
 
   function handleAddToCart(book: Book, badgeId: string) {
-    // Placeholder cart handler: non-blocking console log and show a transient inline badge
-    console.log(`Add to Cart clicked for book id=${book.id} title="${book.title}"`);
-    const badge = document.getElementById(badgeId);
-    if (badge) {
-      badge.classList.add('show');
-      // Auto-hide after short delay without blocking UI
-      window.setTimeout(() => {
-        badge.classList.remove('show');
-      }, 1200);
+    if (!user) {
+      // Require login to add to cart
+      const next = location.pathname + location.search;
+      navigate(`/login?next=${encodeURIComponent(next)}`);
+      return;
     }
+    addToCart(book, 1);
+    showBadge(badgeId);
   }
 
   return (

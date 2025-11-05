@@ -5,6 +5,8 @@ import { BrowserRouter } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './styles/global.css';
 import App from './App';
+import { AuthProvider } from './context/AuthContext';
+import { CartProvider } from './context/CartContext';
 
 // PUBLIC_INTERFACE
 function bootstrapApp() {
@@ -27,7 +29,11 @@ function bootstrapApp() {
           v7_relativeSplatPath: true
         }}
       >
-        <App />
+        <AuthProvider>
+          <CartProvider>
+            <App />
+          </CartProvider>
+        </AuthProvider>
       </BrowserRouter>
     </React.StrictMode>
   );

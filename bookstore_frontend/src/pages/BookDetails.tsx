@@ -69,7 +69,7 @@ export default function BookDetails(): JSX.Element {
             <div className="d-flex gap-2 align-items-center">
               <strong className="fs-4">${book.price.toFixed(2)}</strong>
               <button className="btn btn-primary" disabled>
-                Add to Cart (demo)
+                Add to Cart
               </button>
               <Link to="/catalog" className="btn btn-outline-secondary">
                 Back

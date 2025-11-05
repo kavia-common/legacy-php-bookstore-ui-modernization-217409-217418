@@ -1,8 +1,10 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
-import { Link, NavLink, useNavigate } from 'react-router-dom';
+import { Link, NavLink, useLocation, useNavigate } from 'react-router-dom';
 import { sampleBooks } from '../data/sampleBooks';
 import type { Book } from './ProductList';
 import { attachFallback, getImageSrc } from '../utils/imageUtils';
+import { useAuth } from '../context/AuthContext';
+import { useCart } from '../context/CartContext';
 
 // PUBLIC_INTERFACE
 export default function AppNavbar(): JSX.Element {
@@ -135,6 +137,19 @@ export default function AppNavbar(): JSX.Element {
     }
   }
 
+  const { user, logout } = useAuth();
+  const { totalQty } = useCart();
+  const location = useLocation();
+
+  function goCheckout() {
+    if (!user) {
+      // redirect to login and then back to checkout
+      navigate(`/login?next=${encodeURIComponent('/checkout/payment')}`);
+      return;
+    }
+    navigate('/checkout/payment');
+  }
+
   return (
     <nav className="navbar navbar-expand-lg bg-white shadow-sm">
       <div className="container">
@@ -165,19 +180,19 @@ export default function AppNavbar(): JSX.Element {
             </li>
             <li className="nav-item">
               <NavLink className="nav-link" to="/cart" onClick={close}>
-                Cart
+                Cart {totalQty > 0 && <span className="badge text-bg-light text-dark ms-1">{totalQty}</span>}
               </NavLink>
             </li>
             <li className="nav-item">
-              <NavLink className="nav-link" to="/checkout" onClick={close}>
+              <button className="nav-link btn btn-link p-0" onClick={() => { close(); goCheckout(); }}>
                 Checkout
-              </NavLink>
+              </button>
             </li>
           </ul>
 
           {/* Global Search */}
           <form
-            className="d-flex position-relative"
+            className="d-flex position-relative me-3"
             role="search"
             aria-label="Global book search"
             onSubmit={(e) => {
@@ -243,6 +258,33 @@ export default function AppNavbar(): JSX.Element {
               </div>
             )}
           </form>
+
+          {/* Auth section */}
+          {!user ? (
+            <div className="d-flex gap-2">
+              <Link className="btn btn-outline-secondary" to={`/login?next=${encodeURIComponent(location.pathname + location.search)}`} onClick={close}>
+                Login
+              </Link>
+              <Link className="btn btn-primary" to={`/signup?next=${encodeURIComponent(location.pathname + location.search)}`} onClick={close}>
+                Sign up
+              </Link>
+            </div>
+          ) : (
+            <div className="dropdown">
+              <button className="btn btn-light dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                {user.name}
+              </button>
+              <ul className="dropdown-menu dropdown-menu-end">
+                <li><span className="dropdown-item-text text-muted small">{user.email}</span></li>
+                <li><hr className="dropdown-divider" /></li>
+                <li>
+                  <button className="dropdown-item" onClick={() => logout()}>
+                    Sign out
+                  </button>
+                </li>
+              </ul>
+            </div>
+          )}
         </div>
       </div>
     </nav>
