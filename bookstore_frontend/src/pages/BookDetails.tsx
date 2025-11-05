@@ -1,7 +1,7 @@
 import React from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { sampleBooks } from '../data/sampleBooks';
-import { Badge, Button, Card } from 'react-bootstrap';
+import { Badge, Button, Card } from 'react-bootstrap'; // top-level named imports
 
 // PUBLIC_INTERFACE
 export default function BookDetails(): JSX.Element {

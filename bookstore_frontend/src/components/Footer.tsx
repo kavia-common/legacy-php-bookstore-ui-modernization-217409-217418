@@ -1,5 +1,5 @@
 import React from 'react';
-import { Container } from 'react-bootstrap';
+import { Container } from 'react-bootstrap'; // top-level named imports
 
 // PUBLIC_INTERFACE
 export default function AppFooter(): JSX.Element {

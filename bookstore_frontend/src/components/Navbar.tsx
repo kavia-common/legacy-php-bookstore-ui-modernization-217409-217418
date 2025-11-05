@@ -1,5 +1,5 @@
 import React from 'react';
-import { Container, Nav, Navbar } from 'react-bootstrap';
+import { Container, Nav, Navbar } from 'react-bootstrap'; // top-level named imports from react-bootstrap
 import { Link, NavLink } from 'react-router-dom';
 
 // PUBLIC_INTERFACE

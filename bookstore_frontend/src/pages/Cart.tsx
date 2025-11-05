@@ -1,5 +1,5 @@
 import React from 'react';
-import { Card, Alert } from 'react-bootstrap';
+import { Card, Alert } from 'react-bootstrap'; // top-level named imports
 
 // PUBLIC_INTERFACE
 export default function Cart(): JSX.Element {

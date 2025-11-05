@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Card, Row, Col } from 'react-bootstrap';
+import { Button, Card, Row, Col } from 'react-bootstrap'; // top-level named imports
 import { Link } from 'react-router-dom';
 
 // PUBLIC_INTERFACE

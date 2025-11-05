@@ -1,5 +1,5 @@
 import React, { useMemo, useState } from 'react';
-import { Row, Col, Form } from 'react-bootstrap';
+import { Row, Col, Form } from 'react-bootstrap'; // top-level named imports
 import { sampleBooks } from '../data/sampleBooks';
 import ProductList from '../components/ProductList';
 import Filters from '../components/Filters';
