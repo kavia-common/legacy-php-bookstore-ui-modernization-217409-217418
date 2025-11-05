@@ -1,5 +1,6 @@
 import React from 'react';
-import { Card, Alert } from 'react-bootstrap';
+import Card from 'react-bootstrap/Card';
+import Alert from 'react-bootstrap/Alert';
 
 // PUBLIC_INTERFACE
 export default function Checkout(): JSX.Element {

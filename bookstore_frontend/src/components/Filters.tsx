@@ -1,5 +1,5 @@
 import React, { PropsWithChildren } from 'react';
-import { Card } from 'react-bootstrap';
+import Card from 'react-bootstrap/Card';
 
 // PUBLIC_INTERFACE
 export default function Filters({ children }: PropsWithChildren): JSX.Element {

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Container } from 'react-bootstrap';
+import Container from 'react-bootstrap/Container';
 import AppNavbar from './components/Navbar';
 import AppFooter from './components/Footer';
 import AppRoutes from './routes';

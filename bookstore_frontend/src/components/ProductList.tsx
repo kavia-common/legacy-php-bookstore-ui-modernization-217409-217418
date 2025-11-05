@@ -1,5 +1,9 @@
 import React from 'react';
-import { Card, Button, Row, Col, Badge } from 'react-bootstrap';
+import Card from 'react-bootstrap/Card';
+import Button from 'react-bootstrap/Button';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
+import Badge from 'react-bootstrap/Badge';
 import { Link } from 'react-router-dom';
 
 export type Book = {

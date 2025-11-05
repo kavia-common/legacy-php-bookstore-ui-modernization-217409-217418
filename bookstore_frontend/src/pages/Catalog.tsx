@@ -1,5 +1,7 @@
 import React, { useMemo, useState } from 'react';
-import { Row, Col, Form } from 'react-bootstrap';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
+import Form from 'react-bootstrap/Form';
 import { sampleBooks } from '../data/sampleBooks';
 import ProductList from '../components/ProductList';
 import Filters from '../components/Filters';
