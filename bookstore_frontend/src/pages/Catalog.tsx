@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import React, { useMemo, useState, useEffect } from 'react';
 import data from '../data/books.json';
 import type { Book } from '../types';
 import SearchBar from '../components/SearchBar';
@@ -38,7 +38,7 @@ const Catalog: React.FC = () => {
   const pageItems = filtered.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE);
 
   // Reset to page 1 on filter changes
-  React.useEffect(() => {
+  useEffect(() => {
     setPage(1);
   }, [query, category, price, rating]);
 

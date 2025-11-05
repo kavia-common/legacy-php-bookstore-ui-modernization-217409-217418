@@ -2,6 +2,11 @@ import React, { useState } from 'react';
 import { useCart } from '../context/CartContext';
 import { Link } from 'react-router-dom';
 
+// Minimal local FormEvent type to avoid relying on React.FormEvent
+type LocalFormEvent = {
+  preventDefault: () => void;
+};
+
 const Checkout: React.FC = () => {
   const { items, totalPrice, clearCart } = useCart();
   const [submitted, setSubmitted] = useState(false);
@@ -17,7 +22,8 @@ const Checkout: React.FC = () => {
     cvc: ''
   });
 
-  const [errors, setErrors] = useState<Record<string, string>>({});
+  // Avoid generic on useState for ambient typings
+  const [errors, setErrors] = useState({} as Record<string, string>);
 
   const validate = () => {
     const e: Record<string, string> = {};
@@ -33,7 +39,7 @@ const Checkout: React.FC = () => {
     return Object.keys(e).length === 0;
   };
 
-  const onSubmit = (e: React.FormEvent) => {
+  const onSubmit = (e: LocalFormEvent) => {
     e.preventDefault();
     if (validate()) {
       setSubmitted(true);

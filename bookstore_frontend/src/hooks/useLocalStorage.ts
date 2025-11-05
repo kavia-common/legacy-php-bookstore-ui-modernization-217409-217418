@@ -8,14 +8,16 @@ export function useLocalStorage<T>(key: string, initialValue: T) {
    * @param initialValue Initial value when no stored value
    * @returns [value, setValue]
    */
-  const [value, setValue] = useState<T>(() => {
-    try {
-      const item = localStorage.getItem(key);
-      return item ? (JSON.parse(item) as T) : initialValue;
-    } catch {
-      return initialValue;
-    }
-  });
+  // Avoid generic type parameter on useState for ambient/minimal React typings
+  // Keep state as any internally to prevent tuple inference issues (TS2488) and avoid functional init under untyped useState
+  let initial: any;
+  try {
+    const item = localStorage.getItem(key);
+    initial = item ? JSON.parse(item) : initialValue;
+  } catch {
+    initial = initialValue;
+  }
+  const [value, setValue] = useState(initial as any);
 
   useEffect(() => {
     try {
@@ -25,5 +27,6 @@ export function useLocalStorage<T>(key: string, initialValue: T) {
     }
   }, [key, value]);
 
-  return [value, setValue] as const;
+  // Maintain tuple return but relax inference under minimal types
+  return [value as T, setValue as (v: T | ((prev: T) => T)) => void] as const;
 }
