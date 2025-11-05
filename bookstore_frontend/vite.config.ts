@@ -5,26 +5,23 @@ import react from '@vitejs/plugin-react-swc';
 export default defineConfig(({ mode }) => {
   /**
    * Load envs prefixed with REACT_APP_ to mimic CRA.
-   * We default dev server to port 3000 and bind to all interfaces (host: true).
+   * Force dev server to bind to 0.0.0.0 on port 3000 without auto-switching.
    */
-  const env = loadEnv(mode, process.cwd(), 'REACT_APP_');
-
-  // Prefer explicit REACT_APP_PORT if provided; otherwise default to 3000 for dev.
-  const devPort = Number(env.REACT_APP_PORT) || 3000;
-  const previewPort = Number(env.REACT_APP_PORT) || 3000;
+  loadEnv(mode, process.cwd(), 'REACT_APP_');
 
   return {
     plugins: [react()],
     server: {
-      port: devPort,
-      host: true
+      port: 3000,
+      strictPort: true, // do not auto-increment if busy
+      host: true        // 0.0.0.0
     },
     preview: {
-      port: previewPort,
+      port: 3000,
       host: true
     },
     define: {
-      // Make REACT_APP_* variables available via import.meta.env
+      // Make REACT_APP_* variables available via import.meta.env if needed by code
       'process.env': {}
     }
   };
