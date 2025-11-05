@@ -1,5 +1,4 @@
 import React from 'react';
-import { Container } from 'react-bootstrap'; // top-level named imports
 
 // PUBLIC_INTERFACE
 export default function AppFooter(): JSX.Element {
@@ -8,9 +7,9 @@ export default function AppFooter(): JSX.Element {
   return (
     <footer className="mt-auto">
       <div className="bg-white border-top py-3">
-        <Container className="text-center text-muted small">
+        <div className="container text-center text-muted small">
           © {year} Bookstore. All rights reserved.
-        </Container>
+        </div>
       </div>
     </footer>
   );

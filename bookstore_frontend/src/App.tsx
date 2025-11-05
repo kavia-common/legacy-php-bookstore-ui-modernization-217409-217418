@@ -1,5 +1,4 @@
 import React from 'react';
-import { Container } from 'react-bootstrap'; // Use top-level named imports only from 'react-bootstrap'
 import AppNavbar from './components/Navbar';
 import AppFooter from './components/Footer';
 import AppRoutes from './routes';
@@ -12,9 +11,9 @@ export default function App(): JSX.Element {
   return (
     <div className="d-flex flex-column min-vh-100 bg-light">
       <AppNavbar />
-      <Container as="main" className="flex-grow-1 py-4">
+      <main className="container flex-grow-1 py-4">
         <AppRoutes />
-      </Container>
+      </main>
       <AppFooter />
     </div>
   );

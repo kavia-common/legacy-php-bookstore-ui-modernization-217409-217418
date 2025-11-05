@@ -1,5 +1,4 @@
 import React from 'react';
-import { Card, Button, Row, Col, Badge } from 'react-bootstrap'; // top-level named imports
 import { Link } from 'react-router-dom';
 
 export type Book = {
@@ -19,36 +18,34 @@ export default function ProductList({ items }: { items: Book[] }): JSX.Element {
   }
 
   return (
-    <Row className="g-3">
+    <div className="row g-3">
       {items.map((book) => (
-        <Col key={book.id} xs={12} sm={6} lg={4}>
-          <Card className="h-100 shadow-sm">
-            <Card.Body className="d-flex flex-column">
+        <div key={book.id} className="col-12 col-sm-6 col-lg-4">
+          <div className="card h-100 shadow-sm">
+            <div className="card-body d-flex flex-column">
               <div className="d-flex justify-content-between align-items-start">
-                <Card.Title className="mb-1">{book.title}</Card.Title>
-                <Badge bg="light" text="dark">
-                  {book.category}
-                </Badge>
+                <h5 className="card-title mb-1">{book.title}</h5>
+                <span className="badge text-bg-light text-dark">{book.category}</span>
               </div>
-              <Card.Subtitle className="mb-2 text-muted">by {book.author}</Card.Subtitle>
-              <Card.Text className="text-truncate" title={book.description}>
+              <h6 className="card-subtitle mb-2 text-muted">by {book.author}</h6>
+              <p className="card-text text-truncate" title={book.description}>
                 {book.description}
-              </Card.Text>
+              </p>
               <div className="mt-auto d-flex justify-content-between align-items-center">
                 <strong>${book.price.toFixed(2)}</strong>
                 <div className="d-flex gap-2">
-                  <Button as={Link} to={`/book/${book.id}`} size="sm" variant="outline-primary">
+                  <Link to={`/book/${book.id}`} className="btn btn-sm btn-outline-primary">
                     Details
-                  </Button>
-                  <Button size="sm" variant="primary" disabled>
+                  </Link>
+                  <button className="btn btn-sm btn-primary" disabled>
                     Add
-                  </Button>
+                  </button>
                 </div>
               </div>
-            </Card.Body>
-          </Card>
-        </Col>
+            </div>
+          </div>
+        </div>
       ))}
-    </Row>
+    </div>
   );
 }

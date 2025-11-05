@@ -1,15 +1,14 @@
 import React, { PropsWithChildren } from 'react';
-import { Card } from 'react-bootstrap'; // top-level named imports
 
 // PUBLIC_INTERFACE
 export default function Filters({ children }: PropsWithChildren): JSX.Element {
   /** Sidebar filters container */
   return (
-    <Card className="shadow-sm">
-      <Card.Body>
-        <Card.Title>Filters</Card.Title>
+    <div className="card shadow-sm">
+      <div className="card-body">
+        <h5 className="card-title">Filters</h5>
         {children}
-      </Card.Body>
-    </Card>
+      </div>
+    </div>
   );
 }

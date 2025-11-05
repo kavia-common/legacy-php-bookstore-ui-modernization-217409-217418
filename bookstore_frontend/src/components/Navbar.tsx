@@ -1,34 +1,54 @@
-import React from 'react';
-import { Container, Nav, Navbar } from 'react-bootstrap'; // top-level named imports from react-bootstrap
+import React, { useState } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 
 // PUBLIC_INTERFACE
 export default function AppNavbar(): JSX.Element {
-  /** Top navigation bar */
+  /** Top navigation bar using Bootstrap classes only */
+  const [open, setOpen] = useState(false);
+  const toggle = () => setOpen((v) => !v);
+  const close = () => setOpen(false);
+
   return (
-    <Navbar bg="white" expand="lg" className="shadow-sm">
-      <Container>
-        <Navbar.Brand as={Link} to="/">
+    <nav className="navbar navbar-expand-lg bg-white shadow-sm">
+      <div className="container">
+        <Link className="navbar-brand" to="/" onClick={close}>
           📚 Bookstore
-        </Navbar.Brand>
-        <Navbar.Toggle aria-controls="nav" />
-        <Navbar.Collapse id="nav">
-          <Nav className="me-auto">
-            <Nav.Link as={NavLink} to="/">
-              Home
-            </Nav.Link>
-            <Nav.Link as={NavLink} to="/catalog">
-              Catalog
-            </Nav.Link>
-            <Nav.Link as={NavLink} to="/cart">
-              Cart
-            </Nav.Link>
-            <Nav.Link as={NavLink} to="/checkout">
-              Checkout
-            </Nav.Link>
-          </Nav>
-        </Navbar.Collapse>
-      </Container>
-    </Navbar>
+        </Link>
+        <button
+          className="navbar-toggler"
+          type="button"
+          aria-controls="nav"
+          aria-expanded={open}
+          aria-label="Toggle navigation"
+          onClick={toggle}
+        >
+          <span className="navbar-toggler-icon" />
+        </button>
+        <div className={`collapse navbar-collapse${open ? ' show' : ''}`} id="nav">
+          <ul className="navbar-nav me-auto mb-2 mb-lg-0">
+            <li className="nav-item">
+              <NavLink className="nav-link" to="/" onClick={close} end>
+                Home
+              </NavLink>
+            </li>
+            <li className="nav-item">
+              <NavLink className="nav-link" to="/catalog" onClick={close}>
+                Catalog
+              </NavLink>
+            </li>
+            <li className="nav-item">
+              <NavLink className="nav-link" to="/cart" onClick={close}>
+                Cart
+              </NavLink>
+            </li>
+            <li className="nav-item">
+              <NavLink className="nav-link" to="/checkout" onClick={close}>
+                Checkout
+              </NavLink>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
   );
 }
