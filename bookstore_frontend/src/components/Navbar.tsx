@@ -2,6 +2,7 @@ import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { Link, NavLink, useNavigate } from 'react-router-dom';
 import { sampleBooks } from '../data/sampleBooks';
 import type { Book } from './ProductList';
+import { attachFallback, getImageSrc } from '../utils/imageUtils';
 
 // PUBLIC_INTERFACE
 export default function AppNavbar(): JSX.Element {
@@ -227,17 +228,10 @@ export default function AppNavbar(): JSX.Element {
                     >
                       <div className="flex-shrink-0 rounded overflow-hidden" style={{ width: 32, height: 42 }}>
                         <img
-                          src={book.imageUrl || fallback}
+                          src={getImageSrc(book.imageUrl)}
                           alt={`Cover of ${book.title}`}
                           className="w-100 h-100 object-fit-cover"
-                          onError={(e) => {
-                            const t = e.currentTarget as HTMLImageElement;
-                            if (!t.getAttribute('data-fallback-applied')) {
-                              console.warn('Navbar thumbnail failed to load, applying fallback:', book.imageUrl || t.src);
-                              t.src = fallback;
-                              t.setAttribute('data-fallback-applied', 'true');
-                            }
-                          }}
+                          onError={(e) => attachFallback(e, book.imageUrl)}
                         />
                       </div>
                       <div className="d-flex flex-column text-start">

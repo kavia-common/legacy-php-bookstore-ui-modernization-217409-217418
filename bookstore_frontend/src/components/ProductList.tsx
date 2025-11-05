@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { attachFallback, getImageSrc, useImageDiagnostics } from '../utils/imageUtils';
 
 export type Book = {
   id: number;
@@ -18,22 +19,14 @@ export default function ProductList({ items }: { items: Book[] }): JSX.Element {
    * Adds an accessible overlay with quick actions on hover and focus within:
    * - "View details" navigates to /book/:id
    * - "Add to Cart" shows non-blocking feedback (console + inline badge)
+   * Includes diagnostics mode badge to show image status.
    */
   if (!items.length) {
     return <p className="text-muted">No books match your criteria.</p>;
   }
 
-  const fallback = '/assets/books/placeholder-book.png';
-
-  const handleImgError = (e: React.SyntheticEvent<HTMLImageElement>, originalSrc?: string) => {
-    const t = e.currentTarget;
-    // Prevent infinite loop if fallback also fails
-    if (!t.getAttribute('data-fallback-applied')) {
-      console.warn('Image failed to load, applying fallback:', originalSrc || t.src);
-      t.src = fallback;
-      t.setAttribute('data-fallback-applied', 'true');
-    }
-  };
+  const diagnostics = useImageDiagnostics();
+  const [failedIds, setFailedIds] = useState<Record<number, boolean>>({});
 
   function handleAddToCart(book: Book, badgeId: string) {
     // Placeholder cart handler: non-blocking console log and show a transient inline badge
@@ -52,6 +45,9 @@ export default function ProductList({ items }: { items: Book[] }): JSX.Element {
     <div className="row g-3">
       {items.map((book) => {
         const addedBadgeId = `added-badge-${book.id}`;
+        const src = getImageSrc(book.imageUrl);
+        const didFail = !!failedIds[book.id];
+
         return (
           <div key={book.id} className="col-12 col-sm-6 col-lg-4">
             {/* Make the card focusable to enable :focus-within styles on keyboard nav */}
@@ -59,18 +55,18 @@ export default function ProductList({ items }: { items: Book[] }): JSX.Element {
               {/* Image header with overlay actions */}
               <div className="card-media-3x4 position-relative product-media">
                 <img
-                  src={book.imageUrl || fallback}
+                  src={src}
                   alt={`Cover of ${book.title} by ${book.author}`}
                   className="cover-image"
                   loading="lazy"
                   decoding="async"
-                  onError={(e) => handleImgError(e, book.imageUrl)}
+                  onError={(e) => {
+                    setFailedIds((prev) => ({ ...prev, [book.id]: true }));
+                    attachFallback(e, book.imageUrl);
+                  }}
                 />
                 {/* Quick actions overlay - visible on hover and focus-within */}
-                <div
-                  className="product-actions-overlay"
-                  aria-hidden="true"
-                />
+                <div className="product-actions-overlay" aria-hidden="true" />
                 <div
                   className="product-actions"
                   role="group"
@@ -103,6 +99,17 @@ export default function ProductList({ items }: { items: Book[] }): JSX.Element {
                 <p className="card-text text-truncate" title={book.description}>
                   {book.description}
                 </p>
+
+                {diagnostics && (
+                  <div className="mt-1">
+                    <span
+                      className={`badge rounded-pill ${didFail ? 'bg-warning text-dark' : 'bg-success-subtle text-success'}`}
+                      title={didFail ? 'Image failed, using placeholder' : 'Image loaded'}
+                    >
+                      {didFail ? 'img: placeholder' : 'img: ok'}
+                    </span>
+                  </div>
+                )}
 
                 <div className="mt-auto d-flex justify-content-between align-items-center pt-2">
                   <strong className="fs-5">${book.price.toFixed(2)}</strong>

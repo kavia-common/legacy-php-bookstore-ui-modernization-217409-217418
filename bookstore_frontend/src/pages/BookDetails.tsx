@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { sampleBooks } from '../data/sampleBooks';
+import { attachFallback, getImageSrc, useImageDiagnostics } from '../utils/imageUtils';
 
 // PUBLIC_INTERFACE
 export default function BookDetails(): JSX.Element {
@@ -25,16 +26,9 @@ export default function BookDetails(): JSX.Element {
     );
   }
 
-  const fallback = '/assets/books/placeholder-book.png';
-
-  const handleImgError = (e: React.SyntheticEvent<HTMLImageElement>, originalSrc?: string) => {
-    const t = e.currentTarget;
-    if (!t.getAttribute('data-fallback-applied')) {
-      console.warn('Image failed to load, applying fallback:', originalSrc || t.src);
-      t.src = fallback;
-      t.setAttribute('data-fallback-applied', 'true');
-    }
-  };
+  const diagnostics = useImageDiagnostics();
+  const [failed, setFailed] = useState(false);
+  const src = getImageSrc(book.imageUrl);
 
   return (
     <div className="card shadow-sm">
@@ -43,14 +37,27 @@ export default function BookDetails(): JSX.Element {
           <div className="col-12 col-md-4">
             <div className="details-media">
               <img
-                src={book.imageUrl || fallback}
+                src={src}
                 alt={`Cover of ${book.title} by ${book.author}`}
                 className="cover-image"
                 loading="lazy"
                 decoding="async"
-                onError={(e) => handleImgError(e, book.imageUrl)}
+                onError={(e) => {
+                  setFailed(true);
+                  attachFallback(e, book.imageUrl);
+                }}
               />
             </div>
+            {diagnostics && (
+              <div className="mt-2">
+                <span
+                  className={`badge rounded-pill ${failed ? 'bg-warning text-dark' : 'bg-success-subtle text-success'}`}
+                  title={failed ? 'Image failed, using placeholder' : 'Image loaded'}
+                >
+                  {failed ? 'img: placeholder' : 'img: ok'}
+                </span>
+              </div>
+            )}
           </div>
           <div className="col-12 col-md-8">
             <div className="d-flex justify-content-between align-items-center">
