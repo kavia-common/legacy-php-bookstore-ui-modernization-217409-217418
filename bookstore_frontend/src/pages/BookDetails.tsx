@@ -41,11 +41,13 @@ export default function BookDetails(): JSX.Element {
       <div className="card-body">
         <div className="row g-4">
           <div className="col-12 col-md-4">
-            <div className="ratio ratio-3x4">
+            <div className="details-media">
               <img
                 src={book.imageUrl || fallback}
                 alt={`Cover of ${book.title} by ${book.author}`}
-                className="img-fluid rounded book-cover"
+                className="cover-image"
+                loading="lazy"
+                decoding="async"
                 onError={(e) => handleImgError(e, book.imageUrl)}
               />
             </div>

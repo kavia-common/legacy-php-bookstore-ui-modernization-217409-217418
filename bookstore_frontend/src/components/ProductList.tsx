@@ -55,13 +55,15 @@ export default function ProductList({ items }: { items: Book[] }): JSX.Element {
         return (
           <div key={book.id} className="col-12 col-sm-6 col-lg-4">
             {/* Make the card focusable to enable :focus-within styles on keyboard nav */}
-            <div className="card h-100 shadow-sm product-card border-0" tabIndex={0}>
+            <div className="card h-100 product-card shadow-hover" tabIndex={0}>
               {/* Image header with overlay actions */}
-              <div className="ratio ratio-3x4 position-relative product-media">
+              <div className="card-media-3x4 position-relative product-media">
                 <img
                   src={book.imageUrl || fallback}
                   alt={`Cover of ${book.title} by ${book.author}`}
-                  className="card-img-top book-cover"
+                  className="cover-image"
+                  loading="lazy"
+                  decoding="async"
                   onError={(e) => handleImgError(e, book.imageUrl)}
                 />
                 {/* Quick actions overlay - visible on hover and focus-within */}
