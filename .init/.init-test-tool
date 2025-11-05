@@ -1,0 +1,4 @@
+{
+    "command": "npm run test",
+    "working_directory": "/home/kavia/workspace/code-generation/legacy-php-bookstore-ui-modernization-217409-217418/bookstore_frontend"
+}
