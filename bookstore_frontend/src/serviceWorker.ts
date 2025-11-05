@@ -6,16 +6,33 @@
     * calling this function will remove it.
     */
    if ('serviceWorker' in navigator) {
-     navigator.serviceWorker.getRegistrations?.().then(regs => {
-       regs.forEach(reg => {
-         try {
-           reg.unregister();
-         } catch {
-           // ignore
-         }
-       });
-     }).catch(() => {
-       // ignore
-     });
+     // Unregister all known registrations
+     navigator.serviceWorker.getRegistrations?.()
+       .then(regs => {
+         regs.forEach(reg => {
+           try { reg.unregister(); } catch { /* ignore */ }
+         });
+       })
+       .catch(() => { /* ignore */ });
+
+     // Best-effort: also try the default scope registration (if supported)
+     try {
+       navigator.serviceWorker.getRegistration?.()
+         ?.then(reg => { try { reg?.unregister(); } catch { /* ignore */ } })
+         .catch(() => { /* ignore */ });
+     } catch { /* ignore */ }
+
+     // Clear SW caches if any were left over
+     try {
+       // @ts-ignore - caches is a global in browsers
+       caches?.keys?.().then((keys: string[]) => {
+         keys.forEach(k => {
+           try {
+             // @ts-ignore
+             caches.delete?.(k);
+           } catch { /* ignore */ }
+         });
+       }).catch(() => { /* ignore */ });
+     } catch { /* ignore */ }
    }
  }
