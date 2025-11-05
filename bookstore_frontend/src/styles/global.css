@@ -115,9 +115,76 @@ a.link-primary:hover {
   border-radius: .5rem;
   overflow: hidden;
 }
-.product-card:hover {
+.product-card:hover,
+.product-card:focus-within {
   transform: translateY(-2px);
   box-shadow: 0 .5rem 1rem rgba(0,0,0,.08), 0 .125rem .25rem rgba(0,0,0,.06);
+  outline: none;
+}
+
+/* Quick actions overlay on product image */
+.product-media {
+  overflow: hidden;
+}
+.product-actions-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, rgba(0,0,0,0.0), rgba(0,0,0,0.25) 40%, rgba(0,0,0,0.35));
+  opacity: 0;
+  transition: opacity .2s ease;
+  pointer-events: none; /* allow clicking buttons only */
+}
+.product-actions {
+  position: absolute;
+  left: 50%;
+  bottom: .5rem;
+  transform: translate(-50%, 10px);
+  display: flex;
+  gap: .5rem;
+  opacity: 0;
+  transition: opacity .2s ease, transform .2s ease;
+  z-index: 1;
+}
+.product-card:hover .product-actions,
+.product-card:focus-within .product-actions {
+  opacity: 1;
+  transform: translate(-50%, 0);
+}
+.product-card:hover .product-actions-overlay,
+.product-card:focus-within .product-actions-overlay {
+  opacity: 1;
+}
+
+/* Buttons on overlay: ensure contrast on light theme */
+.product-actions .btn-light {
+  background-color: rgba(255,255,255,0.95);
+  border-color: rgba(0,0,0,0.08);
+}
+.product-actions .btn-primary {
+  background-color: var(--color-primary);
+  border-color: var(--color-primary);
+}
+
+/* Small non-blocking "Added" badge */
+.added-badge {
+  position: absolute;
+  right: 0;
+  top: 0;
+  transform: translateY(-6px);
+  background: var(--primary-10);
+  color: var(--color-primary);
+  border: 1px solid rgba(59,130,246,0.2);
+  border-radius: 999px;
+  padding: .125rem .5rem;
+  font-size: .75rem;
+  line-height: 1rem;
+  box-shadow: 0 .25rem .5rem rgba(0,0,0,0.06);
+  opacity: 0;
+  transition: opacity .15s ease;
+  pointer-events: none;
+}
+.added-badge.show {
+  opacity: 1;
 }
 
 /* Search dropdown look */
@@ -134,3 +201,14 @@ a.link-primary:hover {
 
 /* Ensure ratio helper is supported consistently if used elsewhere */
 .ratio-3x4 { aspect-ratio: 3 / 4; }
+
+/* Mobile tweaks: keep overlay buttons usable on small screens */
+@media (max-width: 575.98px) {
+  .product-actions {
+    gap: .4rem;
+  }
+  .product-actions .btn-sm {
+    padding: .25rem .5rem;
+    font-size: .8rem;
+  }
+}
