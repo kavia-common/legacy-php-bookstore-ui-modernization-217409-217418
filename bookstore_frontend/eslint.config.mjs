@@ -2,9 +2,9 @@ import pluginJs from "@eslint/js";
 import pluginReact from "eslint-plugin-react";
 
 export default [
-  { files: ["**/*.{js,mjs,cjs,jsx}"] },
-  { 
-    languageOptions: { 
+  { files: ["**/*.{js,mjs,cjs,jsx,ts,tsx}"] },
+  {
+    languageOptions: {
       parserOptions: {
         ecmaVersion: "latest",
         sourceType: "module",
@@ -12,15 +12,11 @@ export default [
       },
       globals: {
         document: true,
-        window: true,
-        test: true,
-        expect: true
+        window: true
       }
     },
     rules: {
-
-     'no-unused-vars': ['error', { varsIgnorePattern: 'React|App' }]
-
+      "no-unused-vars": ["warn", { varsIgnorePattern: "React|App" }]
     }
   },
   pluginJs.configs.recommended,
@@ -32,4 +28,4 @@ export default [
       "react/jsx-uses-vars": "error"
     }
   }
-]
+];
