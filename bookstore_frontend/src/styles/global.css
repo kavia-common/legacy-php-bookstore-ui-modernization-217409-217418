@@ -6,6 +6,11 @@
   --surface: #ffffff;
   --background: #f9fafb;
   --text: #111827;
+
+  /* Accent helpers */
+  --primary-10: rgba(59, 130, 246, 0.1);
+  --primary-15: rgba(59, 130, 246, 0.15);
+  --info-10: rgba(6, 182, 212, 0.1);
 }
 
 html, body, #root {
@@ -17,11 +22,55 @@ body {
   color: var(--text);
 }
 
+/* Primary button aligns with style guide primary */
 .btn-primary {
   background-color: var(--color-primary);
   border-color: var(--color-primary);
 }
+.btn-primary:hover,
+.btn-primary:focus {
+  filter: brightness(0.95);
+}
 
+/* Outline info uses success accent (#06b6d4) per style guide */
+.btn-outline-info {
+  color: var(--color-success);
+  border-color: var(--color-success);
+}
+.btn-outline-info:hover,
+.btn-outline-info:focus {
+  background-color: var(--color-success);
+  color: #ffffff;
+}
+
+/* Link color matches primary accent */
 a {
   text-decoration: none;
 }
+a.link-primary {
+  color: var(--color-primary);
+}
+a.link-primary:hover {
+  color: #2563eb; /* slightly darker */
+}
+
+/* Hero gradient background */
+.hero-gradient {
+  background: linear-gradient(135deg, var(--primary-10), #f3f4f6 60%);
+  border: 1px solid rgba(0, 0, 0, 0.04);
+}
+
+/* Subtle accent border for featured cards */
+.feature-accent {
+  border-left: 4px solid var(--color-success);
+}
+
+/* Bootstrap-like subtle background helpers used in JSX */
+.bg-primary-subtle { background-color: var(--primary-10) !important; }
+.text-primary { color: var(--color-primary) !important; }
+.bg-info-subtle { background-color: var(--info-10) !important; }
+.text-info { color: var(--color-success) !important; }
+.text-secondary { color: var(--color-secondary) !important; }
+
+/* Optional: a faint white background used in hero card */
+.bg-white\/75 { background-color: rgba(255,255,255,0.75) !important; }
