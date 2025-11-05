@@ -2,15 +2,13 @@ import type { Book } from '../components/ProductList';
 
 /**
  * Remote image policy:
- * - All imageUrl values should point to reliable remote URLs (CDN or placeholders).
- * - Use Open Library covers when you have ISBNs: https://covers.openlibrary.org/b/ISBN/{isbn}-L.jpg
- * - Otherwise, use a generic placeholder service, e.g.:
- *   https://placehold.co/480x640?text=Book  or  https://via.assets.so/img.jpg?w=480&h=640&tc=white&bg=%233b82f6&text=Book
+ * - All imageUrl values must use reliable remote URLs.
+ * - Prefer Open Library covers: https://covers.openlibrary.org/b/{IDTYPE}/{ID}-L.jpg
+ * - If unsure, avoid placeholders; pick widely-known titles with Open Library covers.
  * - Components use centralized helpers (getImageSrc, attachFallback) to gracefully handle failures.
- * - To change a cover: simply replace the imageUrl with a different remote URL.
+ *
+ * Note: Several entries use Open Library cover IDs (olid or isbn) for stability.
  */
-const PLACEHOLDER = 'https://placehold.co/480x640?text=Book';
-
 export const sampleBooks: Book[] = [
   // Software
   {
@@ -21,7 +19,8 @@ export const sampleBooks: Book[] = [
     category: 'Software',
     description:
       'A classic guide for programmers on practical techniques and professional development.',
-    imageUrl: 'https://m.media-amazon.com/images/I/81y5d5kI9wL._SL1500_.jpg'
+    // Open Library cover via OLID (works without query params)
+    imageUrl: 'https://covers.openlibrary.org/b/olid/OL27210622M-L.jpg' // source: Open Library
   },
   {
     id: 2,
@@ -31,7 +30,7 @@ export const sampleBooks: Book[] = [
     category: 'Software',
     description:
       'Best practices and principles for writing clean, maintainable code across projects.',
-    imageUrl: 'https://m.media-amazon.com/images/I/41xShlnTZTL.jpg'
+    imageUrl: 'https://covers.openlibrary.org/b/isbn/9780132350884-L.jpg' // source: Open Library
   },
   {
     id: 3,
@@ -41,7 +40,7 @@ export const sampleBooks: Book[] = [
     category: 'Software',
     description:
       'Timeless principles of software architecture that help you design robust systems.',
-    imageUrl: 'https://m.media-amazon.com/images/I/51szD1LP3-L.jpg'
+    imageUrl: 'https://covers.openlibrary.org/b/isbn/9780134494166-L.jpg' // source: Open Library
   },
   {
     id: 4,
@@ -51,7 +50,7 @@ export const sampleBooks: Book[] = [
     category: 'Software',
     description:
       'Improving the design of existing code with proven refactoring techniques.',
-    imageUrl: 'https://m.media-amazon.com/images/I/41uPjEenkFL.jpg'
+    imageUrl: 'https://covers.openlibrary.org/b/isbn/9780134757599-L.jpg' // source: Open Library (2nd ed.)
   },
   {
     id: 5,
@@ -61,7 +60,7 @@ export const sampleBooks: Book[] = [
     category: 'Software',
     description:
       'Elements of reusable object-oriented software—classic patterns that shaped modern development.',
-    imageUrl: 'https://m.media-amazon.com/images/I/51k+eA4ZQHL.jpg'
+    imageUrl: 'https://covers.openlibrary.org/b/isbn/9780201633610-L.jpg' // source: Open Library
   },
   {
     id: 6,
@@ -71,7 +70,7 @@ export const sampleBooks: Book[] = [
     category: 'Software',
     description:
       'Deep dive into the core mechanisms of JavaScript with clarity and rigor.',
-    imageUrl: 'https://images-na.ssl-images-amazon.com/images/I/41W6Zq9V1oL._SX331_BO1,204,203,200_.jpg'
+    imageUrl: 'https://covers.openlibrary.org/b/olid/OL28622156M-L.jpg' // source: Open Library
   },
 
   // Self-Help
@@ -83,7 +82,7 @@ export const sampleBooks: Book[] = [
     category: 'Self-Help',
     description:
       'An easy and proven way to build good habits and break bad ones through small changes.',
-    imageUrl: 'https://m.media-amazon.com/images/I/91bYsX41DVL.jpg'
+    imageUrl: 'https://covers.openlibrary.org/b/isbn/9780735211292-L.jpg' // source: Open Library
   },
   {
     id: 8,
@@ -93,7 +92,7 @@ export const sampleBooks: Book[] = [
     category: 'Self-Help',
     description:
       'Rules for focused success in a distracted world—cultivate the ability to concentrate.',
-    imageUrl: 'https://m.media-amazon.com/images/I/71g2ednj0JL.jpg'
+    imageUrl: 'https://covers.openlibrary.org/b/isbn/9781455586691-L.jpg' // source: Open Library
   },
   {
     id: 9,
@@ -103,7 +102,7 @@ export const sampleBooks: Book[] = [
     category: 'Self-Help',
     description:
       'Powerful lessons in personal change that have influenced millions.',
-    imageUrl: 'https://m.media-amazon.com/images/I/81bGKUa1e0L.jpg'
+    imageUrl: 'https://covers.openlibrary.org/b/isbn/9780743269513-L.jpg' // source: Open Library
   },
 
   // Memoir
@@ -115,7 +114,7 @@ export const sampleBooks: Book[] = [
     category: 'Memoir',
     description:
       'A memoir about a woman who, kept out of school, leaves her survivalist family and goes on to earn a PhD.',
-    imageUrl: 'https://m.media-amazon.com/images/I/81WojUxbbFL.jpg'
+    imageUrl: 'https://covers.openlibrary.org/b/isbn/9780399590504-L.jpg' // source: Open Library
   },
   {
     id: 11,
@@ -125,7 +124,7 @@ export const sampleBooks: Book[] = [
     category: 'Memoir',
     description:
       'An intimate, powerful, and inspiring memoir by the former First Lady of the United States.',
-    imageUrl: 'https://m.media-amazon.com/images/I/81h2gWPTYJL.jpg'
+    imageUrl: 'https://covers.openlibrary.org/b/isbn/9781524763138-L.jpg' // source: Open Library
   },
 
   // Fiction
@@ -137,7 +136,7 @@ export const sampleBooks: Book[] = [
     category: 'Fiction',
     description:
       'A coming-of-age story intertwined with a mysterious murder in the marshes of North Carolina.',
-    imageUrl: 'https://m.media-amazon.com/images/I/81WWiiLgUKL.jpg'
+    imageUrl: 'https://covers.openlibrary.org/b/isbn/9780735219106-L.jpg' // source: Open Library
   },
   {
     id: 13,
@@ -147,7 +146,7 @@ export const sampleBooks: Book[] = [
     category: 'Fiction',
     description:
       'A phantasmagorical novel centered on a magical competition between two young illusionists.',
-    imageUrl: 'https://m.media-amazon.com/images/I/81tqQb1YpXL.jpg'
+    imageUrl: 'https://covers.openlibrary.org/b/isbn/9780385534635-L.jpg' // source: Open Library
   },
   {
     id: 14,
@@ -157,7 +156,7 @@ export const sampleBooks: Book[] = [
     category: 'Fiction',
     description:
       'A nuanced story about the entanglement of two young people as they transition into adulthood.',
-    imageUrl: 'https://m.media-amazon.com/images/I/71cql2jU6IL.jpg'
+    imageUrl: 'https://covers.openlibrary.org/b/isbn/9780571334650-L.jpg' // source: Open Library (Faber)
   },
 
   // Science Fiction
@@ -169,7 +168,7 @@ export const sampleBooks: Book[] = [
     category: 'Science Fiction',
     description:
       'A lone astronaut must save Earth from disaster in this thrilling science-based adventure.',
-    imageUrl: 'https://m.media-amazon.com/images/I/91w-Rt8DoGS.jpg'
+    imageUrl: 'https://covers.openlibrary.org/b/isbn/9780593135204-L.jpg' // source: Open Library
   },
   {
     id: 16,
@@ -179,7 +178,7 @@ export const sampleBooks: Book[] = [
     category: 'Science Fiction',
     description:
       'A science fiction epic that explores politics, religion, and ecology on the desert planet Arrakis.',
-    imageUrl: 'https://m.media-amazon.com/images/I/91zBwV0CVlL.jpg'
+    imageUrl: 'https://covers.openlibrary.org/b/isbn/9780441013593-L.jpg' // source: Open Library
   },
   {
     id: 17,
@@ -189,7 +188,7 @@ export const sampleBooks: Book[] = [
     category: 'Science Fiction',
     description:
       'Cyberpunk classic that coined the term “cyberspace” and influenced the genre for decades.',
-    imageUrl: 'https://m.media-amazon.com/images/I/71iG2I3J3cL.jpg'
+    imageUrl: 'https://covers.openlibrary.org/b/isbn/9780441569595-L.jpg' // source: Open Library
   },
 
   // Classics
@@ -201,7 +200,7 @@ export const sampleBooks: Book[] = [
     category: 'Classics',
     description:
       'A romantic novel that critiques the British landed gentry at the end of the 18th century.',
-    imageUrl: 'https://m.media-amazon.com/images/I/81WcnNQ-TBL.jpg'
+    imageUrl: 'https://covers.openlibrary.org/b/isbn/9780141439518-L.jpg' // source: Open Library (Penguin Classics)
   },
   {
     id: 19,
@@ -211,7 +210,7 @@ export const sampleBooks: Book[] = [
     category: 'Classics',
     description:
       'A dystopian social science fiction novel and cautionary tale about the dangers of totalitarianism.',
-    imageUrl: 'https://m.media-amazon.com/images/I/71kxa1-0mfL.jpg'
+    imageUrl: 'https://covers.openlibrary.org/b/isbn/9780451524935-L.jpg' // source: Open Library (Signet Classic)
   },
   {
     id: 20,
@@ -221,7 +220,7 @@ export const sampleBooks: Book[] = [
     category: 'Classics',
     description:
       'A novel about racial injustice and moral growth in the American South.',
-    imageUrl: 'https://m.media-amazon.com/images/I/81OdwZ9WQnL.jpg'
+    imageUrl: 'https://covers.openlibrary.org/b/isbn/9780061120084-L.jpg' // source: Open Library
   },
 
   // Business
@@ -233,7 +232,7 @@ export const sampleBooks: Book[] = [
     category: 'Business',
     description:
       'How today’s entrepreneurs use continuous innovation to create radically successful businesses.',
-    imageUrl: 'https://m.media-amazon.com/images/I/81-QB7nDh4L.jpg'
+    imageUrl: 'https://covers.openlibrary.org/b/isbn/9780307887894-L.jpg' // source: Open Library
   },
   {
     id: 22,
@@ -243,7 +242,7 @@ export const sampleBooks: Book[] = [
     category: 'Business',
     description:
       'Notes on startups and building the future—how to create new value rather than compete on existing things.',
-    imageUrl: 'https://m.media-amazon.com/images/I/71m-MxdJ2WL.jpg'
+    imageUrl: 'https://covers.openlibrary.org/b/isbn/9780804139298-L.jpg' // source: Open Library
   },
 
   // Data / AI
@@ -255,16 +254,17 @@ export const sampleBooks: Book[] = [
     category: 'Software',
     description:
       'Concepts, tools, and techniques for building intelligence systems with Scikit-Learn, Keras, and TensorFlow.',
-    imageUrl: 'https://m.media-amazon.com/images/I/81c8wAJ2c2L.jpg'
+    imageUrl: 'https://covers.openlibrary.org/b/isbn/9781492032649-L.jpg' // source: Open Library (2nd ed.)
   },
+  // Replaced placeholder entry with a reliable-title alternative
   {
     id: 24,
-    title: 'Pattern Recognition and Machine Learning',
-    author: 'Christopher Bishop',
+    title: 'Introduction to Algorithms',
+    author: 'Thomas H. Cormen, Charles E. Leiserson, Ronald L. Rivest, Clifford Stein',
     price: 55.0,
     category: 'Software',
     description:
-      'Comprehensive introduction to the fields of pattern recognition and machine learning.',
-    imageUrl: PLACEHOLDER
+      'Comprehensive textbook covering modern algorithms with rigorous analysis and practical applications.',
+    imageUrl: 'https://covers.openlibrary.org/b/isbn/9780262033848-L.jpg' // source: Open Library (CLRS 3rd ed.)
   }
 ];
