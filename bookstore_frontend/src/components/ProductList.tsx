@@ -8,20 +8,40 @@ export type Book = {
   price: number;
   category: string;
   description: string;
+  imageUrl?: string; // optional cover image url
 };
 
 // PUBLIC_INTERFACE
 export default function ProductList({ items }: { items: Book[] }): JSX.Element {
-  /** Renders a grid of book cards */
+  /**
+   * Renders a grid of book cards with cover images.
+   * Uses a local placeholder if imageUrl is missing or fails to load.
+   */
   if (!items.length) {
     return <p className="text-muted">No books match your criteria.</p>;
   }
+
+  const fallback = '/assets/books/placeholder-book.png';
 
   return (
     <div className="row g-3">
       {items.map((book) => (
         <div key={book.id} className="col-12 col-sm-6 col-lg-4">
-          <div className="card h-100 shadow-sm">
+          <div className="card h-100 shadow-sm product-card">
+            {/** Image header */}
+            <div className="ratio ratio-3x4">
+              <img
+                src={book.imageUrl || fallback}
+                alt={`Cover of ${book.title} by ${book.author}`}
+                className="card-img-top object-fit-cover rounded-top"
+                onError={(e) => {
+                  const target = e.currentTarget as HTMLImageElement;
+                  if (target.src !== window.location.origin + fallback) {
+                    target.src = fallback;
+                  }
+                }}
+              />
+            </div>
             <div className="card-body d-flex flex-column">
               <div className="d-flex justify-content-between align-items-start">
                 <h5 className="card-title mb-1">{book.title}</h5>
