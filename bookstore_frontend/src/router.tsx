@@ -21,6 +21,7 @@ export function AppRouter() {
    * - /cart
    * - /checkout
    * - /about
+   * The default route renders Home.
    */
   return (
     <MainLayout>

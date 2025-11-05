@@ -64,6 +64,7 @@ This is a standalone React 18+ frontend that modernizes a legacy PHP bookstore U
 
 ## Notes
 - Port 3000 is used by default via CRA dev server.
+- No service worker is used. If a prior SW existed in your browser, it is unregistered at app startup and caches are cleared.
 - No environment variables are required.
 - All data is local-only. Replace data in src/data/books.json as needed.
 

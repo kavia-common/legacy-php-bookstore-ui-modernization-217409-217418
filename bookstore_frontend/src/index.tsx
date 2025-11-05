@@ -5,7 +5,6 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './theme.css';
 import './main.css';
 import App from './App';
-import { unregisterServiceWorker } from './serviceWorker';
 
 /**
  * React 18 bootstrap:
@@ -35,11 +34,35 @@ try {
   // no-op
 }
 
-const root = createRoot(container);
+// Defensive: Unregister any active service workers and clear caches synchronously on load.
+// No service worker is used by this app; this prevents "no-op fetch handler" warnings.
+(async () => {
+  try {
+    if ('serviceWorker' in navigator) {
+      const regs = await (navigator.serviceWorker.getRegistrations?.() ?? Promise.resolve([]));
+      for (const reg of regs) {
+        try { await reg.unregister(); } catch { /* ignore */ }
+      }
+      try {
+        const single = await navigator.serviceWorker.getRegistration?.();
+        if (single) { try { await single.unregister(); } catch { /* ignore */ } }
+      } catch { /* ignore */ }
+    }
+  } catch { /* ignore */ }
 
-// Ensure any previously registered service workers are unregistered to avoid
-// no-op fetch handlers and caching issues serving stale assets.
-try { unregisterServiceWorker(); } catch { /* ignore */ }
+  try {
+    // @ts-ignore caches is a browser global
+    const keys: string[] = (await caches?.keys?.()) || [];
+    for (const k of keys) {
+      try {
+        // @ts-ignore
+        await caches.delete?.(k);
+      } catch { /* ignore */ }
+    }
+  } catch { /* ignore */ }
+})();
+
+const root = createRoot(container);
 
 root.render(
   <React.StrictMode>
