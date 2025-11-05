@@ -16,20 +16,15 @@ export default defineConfig({
     port: 3000,
     strictPort: true,
     open: false,
-    host: true, // listen on all interfaces (0.0.0.0)
-    // Ensure HMR connects via the external port when behind a proxy
+    host: true,
     hmr: {
       clientPort: 3000
-    },
-    // Permit preview host (and localhost by default)
-    allowedHosts: ['vscode-internal-40642-beta.beta01.cloud.kavia.ai']
+    }
   },
   preview: {
-    port: 3000,
+    port: 3001,
     strictPort: true,
-    host: true,
-    // Mirror the allowedHosts behavior for preview mode
-    allowedHosts: ['vscode-internal-40642-beta.beta01.cloud.kavia.ai']
+    host: true
   },
   base: '/',
 });
