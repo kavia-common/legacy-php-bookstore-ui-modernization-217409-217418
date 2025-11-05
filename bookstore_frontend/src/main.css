@@ -34,3 +34,21 @@
 .form-range::-webkit-slider-thumb {
   background: var(--color-primary);
 }
+
+/* HomePage enhancements */
+.hover-shadow-sm {
+  transition: box-shadow .2s ease, transform .2s ease;
+}
+.hover-shadow-sm:hover {
+  box-shadow: 0 .3rem .8rem rgba(17, 24, 39, 0.08);
+  transform: translateY(-1px);
+}
+
+.p-md-6 {
+  padding: 4rem !important;
+}
+@media (min-width: 992px) {
+  .p-md-6 {
+    padding: 5rem !important;
+  }
+}

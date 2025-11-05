@@ -11,17 +11,17 @@ const BookCard: React.FC<Props> = ({ book }) => {
   const { addToCart } = useCart();
 
   return (
-    <div className="card h-100">
+    <div className="card h-100 hover-shadow-sm">
       <img src={book.cover} alt={book.title} className="book-cover" />
       <div className="card-body d-flex flex-column">
         <div className="d-flex justify-content-between align-items-start mb-2">
           <h5 className="card-title mb-0">{book.title}</h5>
-          <span className="badge bg-primary">${book.price.toFixed(2)}</span>
+          <span className="badge bg-primary" aria-label={`Price $${book.price.toFixed(2)}`}>${book.price.toFixed(2)}</span>
         </div>
         <p className="text-muted mb-1">{book.author}</p>
         <p className="small flex-grow-1">{book.description}</p>
         <div className="d-flex align-items-center mb-2">
-          <span className="rating me-2">{"★".repeat(Math.round(book.rating))}</span>
+          <span className="rating me-2" aria-hidden="true">{"★".repeat(Math.round(book.rating))}</span>
           <small className="text-muted">({book.rating.toFixed(1)})</small>
         </div>
         <div className="d-flex gap-2">
