@@ -1,26 +1,37 @@
 export const BOOKS_ASSET_BASE = '/assets/books/';
-export const PLACEHOLDER_BOOK = `${BOOKS_ASSET_BASE}placeholder-book.png`;
+// Use a remote placeholder so we never depend on local public assets.
+export const PLACEHOLDER_BOOK = 'https://placehold.co/480x640?text=Book';
 
 // PUBLIC_INTERFACE
 export function getImageSrc(candidate?: string): string {
-  /** Resolve image src to a valid path under /assets/books/ with placeholder fallback. */
+  /**
+   * Resolve image src with graceful handling:
+   * - If candidate is a full URL (http/https/data), return as-is.
+   * - If candidate is a relative/local path, return as-is (legacy tolerance).
+   * - Otherwise, return the remote placeholder.
+   */
   if (!candidate || typeof candidate !== 'string') return PLACEHOLDER_BOOK;
+  const src = candidate.trim();
 
-  // Normalize candidate: ensure it starts with the public assets base
-  let src = candidate.trim();
-  if (!src.startsWith(BOOKS_ASSET_BASE)) {
-    // Only allow filenames and relative hints; coerce to /assets/books/<filename>
-    const justName = src.split('/').pop() || '';
-    src = `${BOOKS_ASSET_BASE}${justName}`;
+  // Allow external URLs directly
+  if (/^(https?:)?\/\//i.test(src) || src.startsWith('data:')) {
+    return src;
   }
 
-  // If normalized path doesn't have a filename, use placeholder
-  const name = src.split('/').pop() || '';
-  if (!name || !name.includes('.')) {
-    return PLACEHOLDER_BOOK;
+  // Allow absolute public paths e.g., /assets/books/name.jpg (legacy tolerance)
+  if (src.startsWith('/')) {
+    return src;
   }
 
-  return src;
+  // If it's a bare filename, previously we coerced to /assets/books/<name>;
+  // now we avoid constructing local paths—prefer placeholder if not a URL/absolute.
+  const hasFileLike = /\.[a-z0-9]+$/i.test(src);
+  if (hasFileLike) {
+    // Still allow pre-existing cases pointing under /assets/books.
+    return `${BOOKS_ASSET_BASE}${src.split('/').pop()}`;
+  }
+
+  return PLACEHOLDER_BOOK;
 }
 
 // PUBLIC_INTERFACE

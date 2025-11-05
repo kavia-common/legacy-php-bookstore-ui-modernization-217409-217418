@@ -135,8 +135,6 @@ export default function AppNavbar(): JSX.Element {
     }
   }
 
-  const fallback = '/assets/books/placeholder-book.png';
-
   return (
     <nav className="navbar navbar-expand-lg bg-white shadow-sm">
       <div className="container">
