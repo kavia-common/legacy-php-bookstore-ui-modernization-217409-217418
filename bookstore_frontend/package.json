@@ -36,5 +36,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "notes": {
+    "serviceWorker": "No service worker is used in this project. Ensure any previous service worker registrations are removed or unregistered in the browser devtools > Application > Service Workers."
   }
 }

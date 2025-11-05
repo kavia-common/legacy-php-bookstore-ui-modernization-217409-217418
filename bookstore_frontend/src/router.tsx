@@ -8,6 +8,8 @@ import CartPage from './pages/Cart';
 import Checkout from './pages/Checkout';
 import About from './pages/About';
 
+/* Router uses BrowserRouter basename='/' in index.tsx */
+//
 // PUBLIC_INTERFACE
 export function AppRouter() {
   /**
