@@ -4,10 +4,10 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "vite",
     "start": "vite",
+    "dev": "vite",
     "build": "tsc -b && vite build",
-    "preview": "vite preview --port=${REACT_APP_PORT:-4173}"
+    "preview": "vite preview --port=3000 --host"
   },
   "dependencies": {
     "bootstrap": "^5.3.3",
